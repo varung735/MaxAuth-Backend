@@ -1,0 +1,19 @@
+{
+  "name": "max-auth-backend",
+  "version": "1.0.0",
+  "description": "This is a server-side code for the service that provides authentication for different projects",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/varung735/MaxAuth-Backend.git"
+  },
+  "author": "varun gupta",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/varung735/MaxAuth-Backend/issues"
+  },
+  "homepage": "https://github.com/varung735/MaxAuth-Backend#readme"
+}
