@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 const env_config = require('../configurations/env_config');
 const CustomError = require('../utils/error/customError');
+const consoleFonts = require('../utils/error/consoleFonts');
 
 const auth = () => {
     let token;
@@ -20,7 +21,8 @@ const auth = () => {
         next();
     }
     catch(error) {
-        console.log(error);
+        console.log(consoleFonts.error(error));
+        throw new CustomError(403, 'Token Invalid or Malformed');
     }
 };
 
