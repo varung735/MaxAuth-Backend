@@ -1,3 +1,5 @@
+const consoleFonts = require('../error/consoleFonts');
+
 const asyncHandler = (fn) => async (req, res, next) => {
     try {
         await fn(req, res, next);

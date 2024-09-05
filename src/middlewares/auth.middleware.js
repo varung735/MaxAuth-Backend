@@ -3,7 +3,7 @@ const env_config = require('../configurations/env_config');
 const CustomError = require('../utils/error/customError');
 const consoleFonts = require('../utils/error/consoleFonts');
 
-const auth = () => {
+const auth = (req, res) => {
     let token;
 
     if(req.cookies.token || req.headers.authorization.startsWith("Bearer")){

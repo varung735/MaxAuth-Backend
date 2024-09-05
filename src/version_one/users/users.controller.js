@@ -4,22 +4,23 @@ const CustomError = require('../../utils/error/customError');
 const sendMail = require('../../utils/mail_service/sendMail');
 const mail_verification_template = require('../../utils/mail_templates/mail_verification_template');
 const consoleFonts = require('../../utils/error/consoleFonts');
+const env_config = require('../../configurations/env_config');
 
 module.exports = {
     Login: asyncHandler(async (req, res) => {
         const { email, password } = req.body;
 
         if(!email || !password) {
-            throw new CustomError(404, 'Email or Password Cannot be Missing');
+            throw new CustomError('Email or Password Cannot be Missing', 404);
         }
 
         const user = await userModel.findOne({ email }).select('+password');
 
         if(user === null) {
-            throw new CustomError(404, 'User Not Found');
+            throw new CustomError('User Not Found', 404);
         }
 
-        const isPasswordMatch = user.comparePassword(user.password);
+        const isPasswordMatch = await user.comparePassword(password);
 
         if(isPasswordMatch) {
             let token = await user.generateJwtToken();
@@ -33,14 +34,14 @@ module.exports = {
             });
         }
         else{
-            throw new CustomError(403, 'Invalid Credentials');
+            throw new CustomError('Invalid Credentials', 403);
         }
     }),
     Signup: asyncHandler(async (req, res) => {
         const { name, email, password } = req.body;
 
         if(!name || !email || !password) {
-            throw new CustomError(404, 'Name, Email or Password Cannot be Missing');
+            throw new CustomError('Name, Email or Password Cannot be Missing', 404);
         }
 
         const user = await userModel.create({
@@ -61,13 +62,13 @@ module.exports = {
         const { email } = req.body;
 
         if(!email) {
-            throw new CustomError(404, 'Email is Missing');
+            throw new CustomError('Email is Missing', 404);
         }
 
         const user = await userModel.findOne({ email });
 
         if(user === null) {
-            throw new CustomError(404, 'User not Found');
+            throw new CustomError('User not Found', 404);
         }
 
         const token = await user.generateVerifyEmailToken();
@@ -101,24 +102,25 @@ module.exports = {
 
             console.log(consoleFonts.error(error.message));
             console.log(error);
-            throw new CustomError(500, error.message);
+            throw new CustomError(error.message, 500);
         }
     }),
     VerifyEmail: asyncHandler(async (req, res) => {
         const { token, otp } = req.query;
 
         if(!token || !otp) {
-            throw new CustomError(404, 'Token or OTP is missing');
+            throw new CustomError('Token or OTP is missing', 404);
         }
 
         const user = await userModel.findOne({ verifyEmailToken: token, verifyEmailExpiry: { $gt: Date.now() } });
 
         if(user === null) {
-            throw new CustomError(404, 'Token Invalid or Expired');
+            throw new CustomError('Token Invalid or Expired', 403);
         }
-
-        if(user.verifyEmailOtp !== otp) {
-            throw new CustomError(403, 'Invalid OTP');
+        
+        if(user.verifyEmailOtp !== parseInt(otp)) {
+            console.log(user.verifyEmailOtp);
+            throw new CustomError('Invalid OTP', 403);
         }
         else {
             user.isEmailVerified = true;
@@ -138,13 +140,13 @@ module.exports = {
         const { email } = req.body;
 
         if(!email) {
-            throw new CustomError(404, 'Email is Missing');
+            throw new CustomError('Email is Missing', 404);
         }
 
         const user = await userModel.findOne({ email });
 
         if(user === null) {
-            throw new CustomError(404, 'User not Found');
+            throw new CustomError('User not Found', 404);
         }
 
         const token = user.generateForgetPassToken();
@@ -157,7 +159,7 @@ module.exports = {
 
         try {
             const link = `${env_config.env === 'LOCAL' ? env_config.req_url_local : env_config.req_url_prod}/users/reset/password?token=${token}`;
-            const template = verify_mail_template(user.name, link, otp);
+            const template = mail_verification_template(user.name, link, otp);
 
             await sendMail({
                 to: email,
@@ -178,7 +180,7 @@ module.exports = {
 
             console.log(consoleFonts.error(error.message));
             console.log(error);
-            throw new CustomError(500, 'Cannot Send Forget Password Link');
+            throw new CustomError('Cannot Send Forget Password Link', 500);
         }
     }),
     ResetPassword: asyncHandler(async (req, res) => {
@@ -186,11 +188,11 @@ module.exports = {
         const { password } = req.body;
 
         if(!token) {
-            throw new CustomError(404, 'Token is Missing');
+            throw new CustomError('Token is Missing', 404);
         }
 
         if(!token || !otp || !password) {
-            throw new CustomError(404, 'One of the fields is Missing');
+            throw new CustomError('One of the fields is Missing', 404);
         }
         
         const user = await userModel.findOne({
@@ -199,11 +201,11 @@ module.exports = {
         });
 
         if(user === null){
-            throw new CustomError(403, 'Token Invalid or Expired');
+            throw new CustomError('Token Invalid or Expired', 403);
         }
 
-        if(user.forgetPasswordOtp !== otp) {
-            throw new CustomError(403, 'Otp is Invalid');
+        if(user.forgetPasswordOtp !== parseInt(otp)) {
+            throw new CustomError('Otp is Invalid', 403);
         }
         else {
             user.forgetPasswordToken = undefined;

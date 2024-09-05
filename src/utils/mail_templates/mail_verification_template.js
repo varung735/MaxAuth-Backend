@@ -53,23 +53,19 @@ const mail_verification_template = function (name, link, otp) {
                     background-color: #e32636;
                     color: #fff;
                     cursor: pointer;
+                    text-decoration: none;
                 }
             </style>
-            <script>
-                function redirectToVerification() {
-                    window.location.href = "${link}";
-                }
-            </script>
         </head>
         <body>
             <div class="main-container">
-                <h1 class="heading">${heading}</h1>
+                <h1 class="heading">Thank You For Choosing Max Auth!</h1>
                 <p class="paragraph">Hi ${name}!!</p>
                 <p class="paragraph">
                     Click on the button below and enter the OTP to verify your email.
                 </p>
                 <p class="otp">${otp}</p>
-                <button class="button" onclick="redirectToVerification()">Verify Email</button>
+                <a class="button" href=${link}>Verify Email</a>
             </div>
         </body>
         </html>

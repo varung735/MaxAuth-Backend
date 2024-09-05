@@ -4,7 +4,7 @@ const env_config = require('../../configurations/env_config');
 const sendMail = async (options) => {
     const message = {
         from: env_config.smtp_user,
-        to: options.email,
+        to: options.to,
         subject: options.subject,
         html: options.html
     };
