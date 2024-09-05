@@ -81,7 +81,7 @@ module.exports = {
 
         try {
             const link = `${env_config.env === 'LOCAL' ? env_config.req_url_local : env_config.req_url_prod}/users/verify/email?token=${token}`;
-            const template = mail_verification_template(user.name, link, otp);
+            const template = mail_verification_template('Verify Your Email', user.name, link, otp);
     
             await sendMail({
                 to: email,
@@ -159,7 +159,7 @@ module.exports = {
 
         try {
             const link = `${env_config.env === 'LOCAL' ? env_config.req_url_local : env_config.req_url_prod}/users/reset/password?token=${token}`;
-            const template = mail_verification_template(user.name, link, otp);
+            const template = mail_verification_template('Reset Your Password', user.name, link, otp);
 
             await sendMail({
                 to: email,

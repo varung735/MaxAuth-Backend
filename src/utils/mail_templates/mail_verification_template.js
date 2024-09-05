@@ -1,4 +1,4 @@
-const mail_verification_template = function (name, link, otp) {
+const mail_verification_template = function (heading, name, link, otp) {
 
     return `
         <!DOCTYPE html>
@@ -59,7 +59,7 @@ const mail_verification_template = function (name, link, otp) {
         </head>
         <body>
             <div class="main-container">
-                <h1 class="heading">Thank You For Choosing Max Auth!</h1>
+                <h1 class="heading">${heading}</h1>
                 <p class="paragraph">Hi ${name}!!</p>
                 <p class="paragraph">
                     Click on the button below and enter the OTP to verify your email.
