@@ -11,5 +11,6 @@ const ConnectToDB = () => {
         process.exit(1);
     });
 }
+const db = mongoose.connection;
 
-module.exports = ConnectToDB;
+module.exports = { ConnectToDB, db };
