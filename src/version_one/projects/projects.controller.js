@@ -28,6 +28,19 @@ module.exports = {
             project
         });
     }),
+    AddUserSchemaToProject: asyncHandler(async (req, res) => {
+        const { projectId, schema, req_keys } = req.body;
+
+        await projectModel.findByIdAndUpdate(projectId, {
+            required_keys: req_keys,
+            project_schema: schema
+        });
+
+        res.status(200).json({
+            success: true,
+            message: 'User Schema Added Successfully'
+        });
+    }),
     GetProjects: asyncHandler(async (req, res) => {
         const { _id } = req.user;
 

@@ -14,6 +14,12 @@ const projectModel = new mongoose.Schema(
             type: String,
             required: [true, 'api key is required'],
             unique: [true, 'api key should be unique']
+        },
+        required_keys: {
+            type: Array
+        },
+        project_schema: {
+            type: Object
         }
     },
     {

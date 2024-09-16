@@ -63,7 +63,7 @@ module.exports = {
 
         await db.collection(`${project_name}-${_id}`).findOneAndUpdate(
             { _id: new ObjectId(userId) },
-            { $set: { update }}
+            { $set: update }
         );
 
         res.status(200).json({

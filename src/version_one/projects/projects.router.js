@@ -5,6 +5,7 @@ const auth = require('../../middlewares/auth.middleware');
 const projectRouter = express.Router();
 
 projectRouter.post('/create', auth, projectController.CreateProject);
+projectRouter.post('/add/schema', auth, projectController.AddUserSchemaToProject);
 projectRouter.get('/get', auth, projectController.GetProjects);
 projectRouter.delete('/delete', auth, projectController.DeleteProject);
 
