@@ -1,4 +1,4 @@
-const mail_verification_template = function (heading, name, link, otp) {
+const mail_verification_template = function (heading, name, otp) {
 
     return `
         <!DOCTYPE html>
@@ -62,10 +62,9 @@ const mail_verification_template = function (heading, name, link, otp) {
                 <h1 class="heading">${heading}</h1>
                 <p class="paragraph">Hi ${name}!!</p>
                 <p class="paragraph">
-                    Click on the button below and enter the OTP to verify your email.
+                    Enter the OTP to verify your email.
                 </p>
                 <p class="otp">${otp}</p>
-                <a class="button" href=${link}>Verify Email</a>
             </div>
         </body>
         </html>

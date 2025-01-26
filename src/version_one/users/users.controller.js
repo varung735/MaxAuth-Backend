@@ -58,7 +58,7 @@ module.exports = {
             user
         });
     }),
-    SendEmailVerificationLink: asyncHandler(async (req, res) => {
+    SendEmailVerificationToken: asyncHandler(async (req, res) => {
         const { email } = req.body;
 
         if(!email) {
@@ -80,8 +80,7 @@ module.exports = {
         await user.save({ validateBeforeSave: false });
 
         try {
-            const link = `${env_config.env === 'LOCAL' ? env_config.req_url_local : env_config.req_url_prod}/users/verify/email?token=${token}`;
-            const template = mail_verification_template('Verify Your Email', user.name, link, otp);
+            const template = mail_verification_template('Verify Your Email', user.name, otp);
     
             await sendMail({
                 to: email,
@@ -91,7 +90,8 @@ module.exports = {
     
             res.status(200).json({
                 success: true,
-                message: 'Mail Sent Successfully'
+                message: 'Mail Sent Successfully',
+                token
             });
         } catch (error) {
             user.verifyEmailToken = undefined;
@@ -136,7 +136,7 @@ module.exports = {
             });
         }
     }),
-    SendForgotPasswordLink: asyncHandler(async (req, res) => {
+    SendForgotPasswordToken: asyncHandler(async (req, res) => {
         const { email } = req.body;
 
         if(!email) {
@@ -158,8 +158,7 @@ module.exports = {
         await user.save({ validateBeforeSave: false });
 
         try {
-            const link = `${env_config.env === 'LOCAL' ? env_config.req_url_local : env_config.req_url_prod}/users/reset/password?token=${token}`;
-            const template = mail_verification_template('Reset Your Password', user.name, link, otp);
+            const template = mail_verification_template('Reset Your Password', user.name, otp);
 
             await sendMail({
                 to: email,
@@ -169,7 +168,8 @@ module.exports = {
 
             res.status(200).json({
                 success: true,
-                message: 'Reset Password Link Sent Successfully'
+                message: 'Reset Password Otp Sent Successfully',
+                token
             });
         } catch (error) {
             user.forgetPasswordToken = undefined;
