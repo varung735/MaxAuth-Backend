@@ -7,6 +7,7 @@ const projectRouter = express.Router();
 projectRouter.post('/create', auth, projectController.CreateProject);
 projectRouter.post('/add/schema', auth, projectController.AddUserSchemaToProject);
 projectRouter.get('/get', auth, projectController.GetProjects);
+projectRouter.get('/get/project', auth, projectController.GetProject);
 projectRouter.delete('/delete', auth, projectController.DeleteProject);
 
 module.exports = projectRouter;

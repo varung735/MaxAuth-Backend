@@ -52,6 +52,17 @@ module.exports = {
             projects
         });
     }),
+    GetProject: asyncHandler(async (req, res) => {
+        const { id } = req.query;
+
+        const project = await projectModel.findOne({ _id: id });
+
+        res.status(200).json({
+            success: true,
+            message: 'Got Project Successfully',
+            project
+        });
+    }),
     DeleteProject: asyncHandler(async (req, res) => {
         const { _id } = req.body;
 
