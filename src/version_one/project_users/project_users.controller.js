@@ -27,8 +27,8 @@ module.exports = {
     GetCollectionUsers: asyncHandler(async (req, res) => {
         const { _id, project_name } = req.project;
 
-        const users = await db.collection(`${project_name}-${_id}`).find().toArray();
-
+        const users = await db.collection(`${project_name}-${_id}`).find({}, { projection: { password: 0 } }).toArray();
+ 
         res.status(200).json({
             success: true,
             message: 'Got All Users Successfully',

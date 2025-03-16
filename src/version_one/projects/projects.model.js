@@ -10,6 +10,11 @@ const projectModel = new mongoose.Schema(
             type: mongoose.Schema.Types.ObjectId,
             ref: 'User'
         },
+        project_base_url: {
+            type: String,
+            required: [true, 'Project Base Url is required'],
+            unique: [true, 'Project Url should be unique']
+        },
         api_key: {
             type: String,
             required: [true, 'api key is required'],
