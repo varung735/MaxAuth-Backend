@@ -7,7 +7,7 @@ const db = require('../../configurations/db_config');
 
 module.exports = {
     CreateProject: asyncHandler(async (req, res) => {
-        const { project_name } = req.body;
+        const { project_name, project_base_url } = req.body;
         const { _id } = req.user;
 
         if(!project_name) {
@@ -18,6 +18,7 @@ module.exports = {
 
         const project = await projectModel.create({
             project_name: project_name,
+            project_base_url: project_base_url,
             user_id: _id,
             api_key: key
         });
