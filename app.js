@@ -8,10 +8,11 @@ const main_router = require('./src/index');
 const app = express();
 
 let req_url = env_config.env == "LOCAL" ? env_config.req_url_local : env_config.req_url_prod;
+let ss_url = env_config.env == "LOCAL" ? env_config.ss_url_local : env_config.ss_url_prod;
 
 app.use(cors({
     credentials: true,
-    origin: req_url
+    origin: [req_url, ss_url]
 }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

@@ -5,6 +5,8 @@ const config = {
     jwt_expiry: process.env.JWT_EXPIRY,
     req_url_local: process.env.REQ_URL_LOCAL,
     req_url_prod: process.env.REQ_URL_PROD,
+    ss_url_local: process.env.SEC_SER_LOCAL_URL,
+    ss_url_prod: process.env.SEC_SER_PROD_URL,
     mongo_url: process.env.MONGO_URL,
     smtp_host: process.env.SMTP_HOST,
     smtp_port: process.env.SMTP_PORT,
