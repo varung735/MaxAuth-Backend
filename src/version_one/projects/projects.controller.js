@@ -79,14 +79,15 @@ module.exports = {
         });
     }),
     getProjectFromApiKey: asyncHandler(async (req, res) => {
-        const { _id, project_base_url, user_id, api_key } = req.project;
+        const { _id, project_name, project_base_url, user_id, api_key } = req.project;
 
         res.status(200).json({
             success: true,
             message: 'Got Project Successfully',
             project: {
-                _id, 
-                project_base_url, 
+                _id,
+                project_name,
+                project_base_url,
                 user_id, 
                 api_key
             }
